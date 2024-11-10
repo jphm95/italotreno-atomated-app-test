@@ -1,13 +1,14 @@
+import pytest
 from appium.options.android import UiAutomator2Options
-
+from appium import webdriver
 from appium_config import APPIUM_HOST, APPIUM_PORT
 from pages.home_page import HomePage
-
+from data.data import  Data
 
 class TestBookRoundTrip:
 
 
-
+    @pytest.fixture
     def appium_driver(self, appium_service):
         options = UiAutomator2Options()
         options.platform_name = 'Android'
@@ -26,26 +27,28 @@ class TestBookRoundTrip:
         driver.quit()
 
     def test_set_cities(self, appium_driver):
+        data = Data.trip_data
         home = HomePage(appium_driver)
 
         home.set_origin_city(
-             origin_city=["origin_city"]
+             origin_city=data["origin_city"]
         )
         home.set_destination_city(
-            destination_city=["destination_city"]
+            destination_city=data["destination_city"]
         )
 
 
     def test_set_dates(self, appium_driver):
+        data = Data.trip_data
         home = HomePage(appium_driver)
 
         home.set_depart_date(
-            depart_month=["depart_month"],
-            depart_day=["depart_day"]
+            depart_month=data["depart_month"],
+            depart_day=data["depart_day"]
         )
         home.set_return_date(
-            return_month=["return_month"],
-            return_day=["return_day"]
+            return_month=data["return_month"],
+            return_day=data["return_day"]
         )
 
 

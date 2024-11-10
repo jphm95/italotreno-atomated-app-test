@@ -9,7 +9,7 @@ class HomePage:
     def __init__(self, driver):
         self.driver = driver
 
-        # Locators:
+    # Locators:
 
     departure_field = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("Enter the departure station")')
     departure_station = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().className("android.widget.EditText")')
@@ -23,12 +23,14 @@ class HomePage:
 
 
     #Dynamic locators:
+    city_locator = (AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{origin_city}")')
     month_locator = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("[month_locator]")')
     depart_day = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("[departure_day]")')
     return_day = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("[return_day]")')
 
 
     #Methods:
+
 
     def click_departure_field(self):
         self.driver.find_element(*self.departure_field).click()
@@ -88,9 +90,13 @@ class HomePage:
     def set_origin_city(self, origin_city):
         self.click_departure_field()
         self.write_departure_station(origin_city)
+        city_locator = (AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{origin_city}")')
+        self.driver.find_element(*city_locator).click()
 
     def set_destination_city(self, destination_city):
         self.write_destination_station(destination_city)
+        city_locator = (AppiumBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{destination_city}")')
+        self.driver.find_element(*city_locator).click()
 
     def set_depart_date(self, depart_month, depart_day):
         self.click_depart_calendar()
